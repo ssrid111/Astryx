@@ -6,7 +6,7 @@ Astryx is a **single-player 2D space survival and puzzle game** where a stranded
 
 But survival isn't determined by skill alone.
 
-Before major challenges, the entity presents the player with the **Fate Roulette** — a mysterious wheel capable of granting valuable advantages or dangerous handicaps. Every spin can bring you one step closer to escape... or make survival even harder.
+Before major challenges, the entity presents the player with the **Fate Roulette**  a mysterious wheel capable of granting valuable advantages or dangerous handicaps. Every spin can bring you one step closer to escape... or make survival even harder.
 
 ## 🎮 Gameplay
 
