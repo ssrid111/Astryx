@@ -104,6 +104,4 @@ Astryx is currently under active development as a group game development project
 
 Features, gameplay mechanics, artwork, and documentation may change throughout development.
 
-### ✨ Will you outsmart the entity... or will fate decide your ending?
-
-# ASTRYX 🚀
+### ASTRYX 🚀 -  ✨ Will you outsmart the entity... or will fate decide your ending?
