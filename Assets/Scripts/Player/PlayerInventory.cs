@@ -5,6 +5,11 @@ public class PlayerInventory : MonoBehaviour
 {
     public bool HasRepairCable { get; private set; }
 
+    public void RestoreState(bool hasRepairCable)
+    {
+        HasRepairCable = hasRepairCable;
+    }
+
     public bool TryCollectRepairCable()
     {
         if (HasRepairCable)

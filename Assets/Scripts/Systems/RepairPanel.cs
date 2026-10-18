@@ -11,10 +11,20 @@ public class RepairPanel : MonoBehaviour
     public bool IsRepaired { get; private set; }
 
     private SpriteRenderer spriteRenderer;
+    private Sprite brokenSprite;
+
+    public bool CanRestore => repairedSprite != null;
+
+    public void RestoreState(bool repaired)
+    {
+        IsRepaired = repaired;
+        spriteRenderer.sprite = repaired ? repairedSprite : brokenSprite;
+    }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        brokenSprite = spriteRenderer.sprite;
     }
 
     private void Update()

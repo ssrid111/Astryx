@@ -8,6 +8,14 @@ public class RepairCablePickup : MonoBehaviour
 
     private bool collected;
 
+    public bool IsCollected => collected;
+
+    public void RestoreState(bool wasCollected)
+    {
+        collected = wasCollected;
+        gameObject.SetActive(!collected);
+    }
+
     private bool CanInteract()
     {
         if (collected || playerInventory == null || playerInventory.HasRepairCable)

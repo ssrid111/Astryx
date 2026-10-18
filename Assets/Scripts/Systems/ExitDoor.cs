@@ -13,10 +13,24 @@ public class ExitDoor : MonoBehaviour
     public bool IsDemoCompleted { get; private set; }
 
     private SpriteRenderer spriteRenderer;
+    private Sprite closedSprite;
+
+    public bool CanRestore => openSprite != null;
+
+    public void RestoreState(bool completed)
+    {
+        IsDemoCompleted = completed;
+        IsOpen = repairPanel.IsRepaired;
+        spriteRenderer.sprite = IsOpen ? openSprite : closedSprite;
+        PlayerMovement movement = playerInventory.GetComponent<PlayerMovement>();
+        if (movement != null)
+            movement.enabled = !completed;
+    }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        closedSprite = spriteRenderer.sprite;
     }
 
     private void Update()
