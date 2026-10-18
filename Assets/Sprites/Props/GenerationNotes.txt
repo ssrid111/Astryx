@@ -1,0 +1,11 @@
+Generated with the built-in image generation tool for the Astryx demo.
+
+Shared prompt: Individual 2D Unity game sprite. Cute hand-drawn cartoon sci-fi matching a mint-green and white chibi astronaut, thick near-black outlines, smooth cel shading, rounded shapes, dark navy details. Front-facing straight-on isolated centered object, complete silhouette and padding. Transparent background, no text, labels, watermark, scene, floor or cast shadow.
+
+RepairCable: A short curved yellow electrical cable with white and mint futuristic connector plugs at both ends.
+PanelBroken: A white rounded spaceship electrical panel with dark navy screen, red warning indicator and disconnected wires; powered-off damaged state.
+PanelRepaired: A white rounded spaceship electrical panel with mint power symbol, green indicator and connected wires; repaired powered-on state.
+DoorClosed: A tall white and mint spaceship airlock frame, closed dark navy sliding leaves and red status indicator.
+DoorOpen: A tall white and mint spaceship airlock frame, retracted dark navy sliding leaves and green status indicator; transparent central opening.
+
+These independently generated demo variants are not pixel-aligned animation frames. Match their visible dimensions when swapping states in Unity.
