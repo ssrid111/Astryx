@@ -28,6 +28,10 @@ public class PuzzleTimer : MonoBehaviour
 
     public void StopTimer() => isRunning = false;
 
+    // Pause / resume without resetting the remaining time (used when a menu opens).
+    public void Pause()  => isRunning = false;
+    public void Resume() { if (timeRemaining > 0f) isRunning = true; }
+
     private void Update()
     {
         if (!isRunning) return;
@@ -44,8 +48,7 @@ public class PuzzleTimer : MonoBehaviour
     // XTRA TIME buff -> add seconds to the puzzle countdown
     public void AddTime(float seconds)
     {
-        timeRemaining += seconds;
-        if (!isRunning && seconds > 0f) isRunning = true;
+        timeRemaining += seconds;   // does not change running state (stays frozen if paused)
         Debug.Log($"[TIMER] +{seconds:0}s -> {timeRemaining:0}s");
     }
 
