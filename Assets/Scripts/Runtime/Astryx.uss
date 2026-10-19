@@ -1,6 +1,6 @@
 
 :root { --ink: #24234B; --cream: #FFF5DA; --purple: #773EE5; }
-.stage { flex-grow: 1; background-image: url('../Art/ship-backdrop.png'); -unity-background-scale-mode: scale-and-crop; color: var(--ink); }
+.stage { flex-grow: 1; background-image: url('../../Sprites/UI/Art/ship-backdrop.png'); -unity-background-scale-mode: scale-and-crop; color: var(--ink); }
 .panel { background-color: var(--cream); border-color: var(--ink); border-width: 4px; border-radius: 22px; padding: 24px; }
 Label { white-space: normal; margin-bottom: 16px; font-size: 26px; }
 .title { font-size: 52px; -unity-font-style: bold; margin-bottom: 24px; }
@@ -25,20 +25,20 @@ Button:disabled { background-color: #85809D; color: #FFFFFF; }
 .overlay { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(36,35,75,0.70); align-items: center; justify-content: center; }
 .modal { width: 1120px; max-width: 94%; padding: 48px; }
 .icon { width: 140px; height: 140px; -unity-background-scale-mode: scale-to-fit; }
-.astronaut { width: 210px; height: 260px; background-image: url('../Art/astronaut.png'); }
+.astronaut { width: 210px; height: 260px; background-image: url('../../Sprites/UI/Art/astronaut.png'); }
 .steps { flex-grow: 1; padding: 36px; }
 .item { width: 30%; align-items: center; background-color: #E5DCF7; border-radius: 20px; padding: 18px; margin-bottom: 24px; }
 .result { width: 52%; padding: 24px; }
 .wheel-column { width: 440px; align-items: center; }
-.wheel { width: 400px; height: 400px; background-image: url('../Art/wheel.png'); }
+.wheel { width: 400px; height: 400px; background-image: url('../../Sprites/UI/Art/wheel.png'); }
 .pointer { width: 24px; height: 24px; background-color: #FFD447; border-radius: 12px; border-color: var(--ink); border-width: 4px; }
 .tile { width: 108px; height: 108px; font-size: 65px; padding: 0; background-color: #203C7A; color: #FFD447; }
-.fuse { background-image: url('../Art/fuse.png'); }
-.tool { background-image: url('../Art/tool.png'); }
-.cell { background-image: url('../Art/cell.png'); }
-.star { background-image: url('../Art/star.png'); }
-.oxygen { background-image: url('../Art/oxygen.png'); }
-.bolt { background-image: url('../Art/bolt.png'); }
+.fuse { background-image: url('../../Sprites/UI/Art/fuse.png'); }
+.tool { background-image: url('../../Sprites/UI/Art/tool.png'); }
+.cell { background-image: url('../../Sprites/UI/Art/cell.png'); }
+.star { background-image: url('../../Sprites/UI/Art/star.png'); }
+.oxygen { background-image: url('../../Sprites/UI/Art/oxygen.png'); }
+.bolt { background-image: url('../../Sprites/UI/Art/bolt.png'); }
 
 #roulette > .modal { background-color: #341963; color: #FFF5DA; border-color: #9259F3; }
 #roulette .result { background-color: #FFF5DA; color: #24234B; border-radius: 20px; }
