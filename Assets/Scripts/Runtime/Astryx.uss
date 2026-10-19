@@ -37,7 +37,6 @@ Button:disabled { background-color: #85809D; color: #FFFFFF; }
 .tool { background-image: url('../../Sprites/UI/Art/tool.png'); }
 .cell { background-image: url('../../Sprites/UI/Art/cell.png'); }
 .star { background-image: url('../../Sprites/UI/Art/star.png'); }
-.oxygen { background-image: url('../../Sprites/UI/Art/oxygen.png'); }
 .bolt { background-image: url('../../Sprites/UI/Art/bolt.png'); }
 
 #roulette > .modal { background-color: #341963; color: #FFF5DA; border-color: #9259F3; }
