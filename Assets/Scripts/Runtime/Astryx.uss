@@ -41,3 +41,27 @@ Button:disabled { background-color: #85809D; color: #FFFFFF; }
 
 #roulette > .modal { background-color: #341963; color: #FFF5DA; border-color: #9259F3; }
 #roulette .result { background-color: #FFF5DA; color: #24234B; border-radius: 20px; }
+
+/* Fate Roulette only: keep the other level screens unchanged. */
+#roulette .roulette-modal { width: 1120px; max-height: 96%; padding: 22px 28px; }
+#roulette .eyebrow { font-size: 16px; margin-bottom: 4px; }
+#roulette .title { font-size: 36px; margin-bottom: 6px; }
+#roulette .roulette-rule { font-size: 18px; margin-bottom: 8px; }
+#roulette .roulette-content { align-items: center; }
+#roulette .wheel-column { width: 40%; flex-shrink: 0; }
+#roulette .wheel { width: 260px; height: 260px; flex-shrink: 0; }
+#roulette .roulette-pointer { width: 24px; height: 24px; rotate: 45deg; background-color: #FFD447; border-color: #24234B; border-width: 3px; margin-bottom: -12px; }
+#roulette .wheel-number { position: absolute; width: 26px; height: 26px; margin-left: -13px; margin-top: -13px; margin-bottom: 0; border-radius: 13px; background-color: #FFF5DA; color: #24234B; font-size: 18px; -unity-font-style: bold; -unity-text-align: middle-center; }
+#roulette .roulette-caption { font-size: 16px; -unity-text-align: middle-center; margin-bottom: 0; }
+#roulette .roulette-result { width: 57%; padding: 22px; border-color: #24234B; border-width: 3px; }
+#roulette .roulette-status { font-size: 18px; -unity-font-style: bold; margin-bottom: 10px; }
+#roulette .roulette-result-title { font-size: 30px; }
+#roulette .roulette-detail { font-size: 20px; min-height: 88px; margin-bottom: 12px; }
+#roulette .roulette-note { font-size: 18px; margin-bottom: 10px; }
+#roulette .roulette-legend { margin-top: 12px; align-items: stretch; }
+#roulette .roulette-outcomes { width: 49%; padding: 10px 12px; background-color: #492875; border-radius: 14px; border-left-color: #55DBB0; border-left-width: 4px; }
+#roulette .roulette-harmful { border-left-color: #FA858C; }
+#roulette .roulette-group-title { font-size: 16px; -unity-font-style: bold; margin-bottom: 8px; }
+#roulette .roulette-outcome { font-size: 15px; margin-bottom: 4px; }
+
+#roulette Button { min-height: 56px; font-size: 22px; padding: 10px 18px; }

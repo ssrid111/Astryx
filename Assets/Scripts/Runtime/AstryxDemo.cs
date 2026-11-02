@@ -19,7 +19,17 @@ public class AstryxDemo : MonoBehaviour
     readonly int[] turns = new int[9];
     readonly string[] glyphs = { "┗", "┏", "┓", "┛" };
     readonly string[] outcomes = { "IMMUNITY", "EXTRA TIME", "HINT", "NEW TOOL", "RESOURCE LOSS", "EQUIPMENT FAILURE", "REDUCED VISION", "HAZARD" };
-    readonly string[] details = { "Ignore the next hazard hit.", "Add 15 seconds of oxygen.", "Follow left → down → right across the middle → down → right.", "Receive one repair charge.", "Lose 10 seconds of oxygen.", "Disable the repair tool for 5 seconds.", "Dim the scene for 5 seconds.", "Spawn one avoidable spark hazard." };
+    // Presentation text mirrors FateEffectController. Outcome selection and effect application stay unchanged.
+    readonly string[] details = {
+        "Immunity is available to shield the next wrong puzzle input.",
+        "Add 30 seconds to the puzzle timer. Oxygen is unchanged.",
+        "A hint is available for the current puzzle.",
+        "Add a bonus inventory slot and fill an empty quick slot with NEW.",
+        "Lock an inventory slot. The affected quick slot is dimmed and marked LOCK.",
+        "Disable the Repair Console for 5 seconds, then restore it.",
+        "Dim the screen to 50% visibility for 5 seconds, then restore it.",
+        "Remove 15 seconds from the puzzle timer. Oxygen is unchanged."
+    };
     void OnEnable()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
@@ -68,7 +78,9 @@ public class AstryxDemo : MonoBehaviour
         root.Q<Button>("spin").SetEnabled(true); root.Q<Button>("fate-close").SetEnabled(true);
         root.Q<Label>("result-type").text = "One free spin per mission.";
         root.Q<Label>("result-title").text = "Feeling lucky?";
-        root.Q<Label>("result-detail").text = "4 helpful and 4 harmful outcomes.";
+        root.Q<Label>("result-detail").text = "4 helpful and 4 harmful outcomes. Spin to apply one effect.";
+        root.Q("wheel").style.rotate = new Rotate(new Angle(0f));
+        root.Q<Button>("fate-close").text = "BACK TO SHIP";
         root.Q<Label>("circuit-status").text = "Join one unbroken path.";
         for (int i = 0; i < 9; i++) { turns[i] = 0; PaintTile(i); }
         Show("intro");
@@ -81,7 +93,8 @@ public class AstryxDemo : MonoBehaviour
         if (spun) return;
         spun = true; int pick = UnityEngine.Random.Range(0, 8);
         root.Q<Button>("spin").SetEnabled(false);
-        root.Q<Label>("result-type").text = pick < 4 ? "★ HELPFUL" : "× HARMFUL";
+        root.Q<Label>("result-type").text = pick < 4 ? "HELPFUL / SPIN USED" : "HARMFUL / SPIN USED";
+        root.Q<Button>("fate-close").text = "RETURN TO SHIP";
         root.Q<Label>("result-title").text = outcomes[pick];
         root.Q<Label>("result-detail").text = details[pick];
         // Segment 0 is at twelve o'clock; clockwise segment indices match outcomes.
