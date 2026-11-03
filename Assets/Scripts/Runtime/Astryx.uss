@@ -65,3 +65,52 @@ Button:disabled { background-color: #85809D; color: #FFFFFF; }
 #roulette .roulette-outcome { font-size: 15px; margin-bottom: 4px; }
 
 #roulette Button { min-height: 56px; font-size: 22px; padding: 10px 18px; }
+
+/* Phase 2: backend-aware UI. The gameplay scene remains visible behind the HUD. */
+.stage.live-world { background-image: none; background-color: rgba(0, 0, 0, 0); }
+.backend-hud { position: absolute; top: 36px; left: 38%; width: 28%; padding: 14px 18px; }
+.backend-hud .heading { font-size: 21px; margin-bottom: 6px; }
+.backend-hud .small { font-size: 16px; margin-bottom: 0; }
+.backend-banner { position: absolute; left: 24px; bottom: 16px; max-width: 26%; background-color: #FFF5DA; color: #24234B; padding: 12px; border-radius: 12px; font-size: 16px; }
+.backend-inventory { max-height: 290px; margin-bottom: 16px; }
+.backend-item { background-color: #E5DCF7; border-color: #24234B; border-width: 2px; border-radius: 12px; margin-bottom: 8px; padding: 12px 18px; }
+.backend-item Label { font-size: 21px; margin-bottom: 4px; }
+.backend-item.locked { background-color: #F8D9DB; }
+.backend-item .small { font-size: 17px; }
+.slot.locked { background-color: #F8D9DB; color: #6B223F; }
+.save-actions Button { width: 46%; }
+#save-status { font-size: 18px; }
+#pause .modal { padding: 28px 36px; }
+#pause .title { font-size: 40px; margin-bottom: 14px; }
+#pause Label { margin-bottom: 12px; }
+.live-world .objectives { width: 30%; right: 24px; padding: 16px; }
+.live-world .objectives .heading { font-size: 22px; }
+.live-world .objectives .body { font-size: 21px; }
+.live-world .oxygen { width: 27%; left: 24px; padding: 16px; }
+.live-world .quick { left: 27%; width: 46%; bottom: 18px; }
+.live-world .console-button { display: none; }
+.live-world .prompt { top: auto; bottom: 220px; left: 25%; max-width: 60%; font-size: 22px; }
+
+.backend-connected .modal { padding: 26px 32px; max-height: 96%; }
+.backend-connected .modal .title { font-size: 36px; margin-bottom: 12px; }
+.backend-connected .modal .body { font-size: 22px; margin-bottom: 12px; }
+.backend-connected .modal Button { min-height: 52px; font-size: 21px; padding: 8px 16px; }
+.backend-connected .astronaut { height: 170px; width: 150px; }
+.backend-connected .steps { padding: 18px; }
+.backend-connected .quick Button { min-height: 42px; font-size: 17px; padding: 4px; }
+.backend-connected .slot { white-space: normal; }
+.backend-connected .backend-banner { max-width: 24%; font-size: 14px; }
+.backend-connected #exit, .backend-connected #gameover-exit { margin-top: 4px; }
+/* Compact HUD also applies to the fate-system scene's 1200 × 800 reference canvas. */
+.backend-connected .objectives { width: 30%; right: 24px; padding: 16px; }
+.backend-connected .objectives .heading { font-size: 22px; }
+.backend-connected .objectives .body { font-size: 21px; }
+.backend-connected #pause-open { align-self: flex-end; width: 70px; min-height: 40px; font-size: 20px; padding: 4px; }
+.backend-connected .oxygen { width: 27%; left: 24px; padding: 16px; }
+.backend-connected .quick { left: 27%; width: 46%; bottom: 18px; }
+.backend-connected .backend-banner { width: 23%; max-width: 23%; font-size: 15px; }
+.backend-connected .fate-open { width: 22%; right: 24px; bottom: 24px; min-height: 52px; font-size: 20px; }
+.backend-connected .console-button { bottom: 29%; right: 28%; min-height: 52px; font-size: 20px; }
+.backend-connected .prompt { display: none; }
+.live-world .prompt { display: flex; }
+.backend-connected .backend-banner { width: 260px; min-width: 260px; max-width: 260px; bottom: 18px; }
