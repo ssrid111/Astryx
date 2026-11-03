@@ -1,0 +1,44 @@
+/* =============================================================================
+   RoomHud.uss
+   Author: Hamitha Viyyapu
+
+   Compact HUD layout for the playable room (DemoRoom) only. Added at runtime
+   by RoomHudLayout, so the Fate Roulette demo scene keeps its original look.
+   Panels sit at the screen edges, between the room's instruction bars
+   (about 48px at the top and 74px at the bottom of the 1200x800 canvas),
+   so the room itself stays visible.
+   ============================================================================= */
+
+/* ---- top row: oxygen | puzzle timer | objective ---- */
+#stage.live-world .oxygen { top: 56px; left: 12px; width: 21%; padding: 8px 12px; border-width: 3px; border-radius: 14px; }
+#stage.live-world .oxygen .heading { font-size: 17px; margin-bottom: 4px; }
+#stage.live-world .oxygen .small { font-size: 13px; margin-bottom: 0; }
+#stage.live-world .oxygen-track { height: 12px; margin-bottom: 4px; }
+
+#stage.live-world .backend-hud { top: 56px; left: 39%; width: 22%; padding: 8px 12px; border-width: 3px; border-radius: 14px; }
+#stage.live-world .backend-hud .heading { font-size: 17px; margin-bottom: 2px; }
+#stage.live-world .backend-hud .small { font-size: 12px; }
+
+#stage.live-world .objectives { top: 56px; right: 12px; width: 25%; padding: 8px 12px; border-width: 3px; border-radius: 14px; }
+#stage.live-world .objectives .heading { font-size: 16px; margin-bottom: 2px; }
+#stage.live-world .objectives .body { font-size: 14px; margin-bottom: 0; }
+#stage.live-world #pause-open { position: absolute; top: 6px; right: 8px; width: 40px; min-height: 30px; font-size: 14px; padding: 2px; margin: 0; border-width: 3px; }
+
+/* ---- alien warning: small banner under the top row, not over the player ---- */
+#stage.live-world .blob-warning { top: 150px; width: 340px; min-height: 56px; padding: 6px 12px; border-width: 3px; border-radius: 16px; }
+#stage.live-world .blob-portrait { width: 44px; height: 40px; margin-right: 10px; }
+#stage.live-world .blob-status { font-size: 15px; margin-bottom: 2px; }
+#stage.live-world .blob-message { font-size: 13px; margin-bottom: 0; }
+#stage.live-world .blob-direction { width: 30px; height: 30px; font-size: 26px; }
+
+/* ---- interaction prompt: just above the inventory ---- */
+#stage.live-world .prompt { bottom: 224px; left: 50%; translate: -50% 0; width: auto; max-width: none; white-space: nowrap; padding: 6px 14px; font-size: 14px; border-radius: 10px; margin-bottom: 0; }
+
+/* ---- bottom row: controls | inventory | Fate Roulette ---- */
+#stage.live-world .quick { bottom: 84px; left: 30%; width: 40%; padding: 6px 10px; border-width: 3px; border-radius: 14px; }
+#stage.live-world .quick .small { font-size: 13px; margin-bottom: 2px; }
+#stage.live-world .quick Button { min-height: 30px; font-size: 13px; padding: 2px; margin: 3px; border-width: 3px; border-radius: 10px; }
+
+#stage.live-world .fate-open { bottom: 84px; right: 12px; width: 20%; min-height: 44px; font-size: 16px; padding: 4px 8px; border-width: 3px; }
+
+#stage.live-world .backend-banner { bottom: 84px; left: 12px; width: 250px; min-width: 250px; max-width: 250px; white-space: normal; padding: 6px 10px; font-size: 12px; margin-bottom: 0; }
