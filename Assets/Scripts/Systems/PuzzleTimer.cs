@@ -14,6 +14,7 @@ public class PuzzleTimer : MonoBehaviour
     [SerializeField] private float startingTime = 60f;
     private float timeRemaining;
     private bool  isRunning;
+    private bool  stopped;   // room finished -> stays stopped even after a menu closes
 
     public float TimeRemaining => timeRemaining;
     public bool  IsRunning     => isRunning;
@@ -23,19 +24,23 @@ public class PuzzleTimer : MonoBehaviour
     {
         timeRemaining = duration > 0f ? duration : startingTime;
         isRunning = true;
+        stopped = false;
         Debug.Log($"[TIMER] Puzzle timer started at {timeRemaining:0}s");
     }
 
-    public void StopTimer() => isRunning = false;
+    public void StopTimer() { isRunning = false; stopped = true; }
 
     // Pause / resume without resetting the remaining time (used when a menu opens).
     public void Pause()  => isRunning = false;
-    public void Resume() { if (timeRemaining > 0f) isRunning = true; }
+    public void Resume() { if (!stopped && timeRemaining > 0f) isRunning = true; }
 
-    private void Update()
+    private void Update() => Tick(Time.deltaTime);
+
+    // Counts the timer down. Public so the tests can step it without waiting.
+    public void Tick(float deltaTime)
     {
         if (!isRunning) return;
-        timeRemaining -= Time.deltaTime;
+        timeRemaining -= deltaTime;
         if (timeRemaining <= 0f)
         {
             timeRemaining = 0f;
