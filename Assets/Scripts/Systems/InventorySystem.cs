@@ -29,7 +29,10 @@ public class InventorySystem : MonoBehaviour
         get { int c = 0; foreach (var s in slots) if (s.isLocked) c++; return c; }
     }
 
-    private void Awake()
+    private void Awake() => EnsureSlots();
+
+    // Also called by the tests, which create the component without running Awake.
+    public void EnsureSlots()
     {
         if (slots.Count == 0)
             for (int i = 0; i < startingSlotCount; i++) slots.Add(new Slot());
@@ -53,6 +56,26 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (var s in slots)
             if (s.itemName == itemName) { s.itemName = ""; return true; }
+        return false;
+    }
+
+    public bool HasItem(string itemName)
+    {
+        foreach (var s in slots)
+            if (s.itemName == itemName) return true;
+        return false;
+    }
+
+    // Consume an item. Items sitting in a locked slot (RESOURCE LOSS) can't be used.
+    public bool UseItem(string itemName)
+    {
+        foreach (var s in slots)
+            if (!s.isLocked && s.itemName == itemName)
+            {
+                s.itemName = "";
+                Debug.Log($"[INVENTORY] Used: {itemName}");
+                return true;
+            }
         return false;
     }
 

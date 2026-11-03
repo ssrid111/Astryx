@@ -17,9 +17,12 @@ using UnityEngine.UIElements;
 //   NEW TOOL          - fills a bonus inventory slot
 //   REDUCED VISION    - dims the screen to 50% for 5s, then restores
 //   EQUIPMENT FAILURE - disables the Repair Console button for 5s, then restores
-//   IMMUNITY / HINT   - set state the puzzle system will read (no puzzle yet)
+//   IMMUNITY          - repels the blob alien once (see BlobAlienController)
+//   HINT              - highlights the next room objective (see ObjectiveHint)
 //
 // Oxygen is a separate ambient survival resource; the roulette does not touch it.
+// Oxygen canisters picked up in the room are stored in the inventory and used
+// automatically when oxygen runs low (unless RESOURCE LOSS locked that slot).
 // =============================================================================
 public class FateEffectController : MonoBehaviour
 {
@@ -32,7 +35,11 @@ public class FateEffectController : MonoBehaviour
     [SerializeField] private float startingOxygen       = 78f;
     [SerializeField] private float oxygenDrainPerSecond = 1f;
     [SerializeField] private bool  drainOxygen          = true;
+    [SerializeField] private string oxygenReserveItem   = "O2 Canister";
+    [SerializeField] private float  reserveRefillAmount = 25f;
+    [SerializeField] private float  autoUseReserveBelow = 25f;   // matches the HUD's LOW OXYGEN state
     private float oxygen;
+    private float extraDrainPerSecond;   // added by the alien while it is close
     private bool  paused;   // true while a UI menu/overlay (roulette, inventory, pause) is open
 
     [Header("Fate outcome values (from the spec)")]
@@ -49,6 +56,8 @@ public class FateEffectController : MonoBehaviour
     public float  VisibilityMultiplier { get; private set; } = 1f;
     public string ActiveOutcome        { get; private set; }
     public float  Oxygen               => oxygen;
+    public bool   IsPaused             => paused;
+    public bool   HazardActive         { get; private set; }   // HAZARD this room -> alien moves faster
 
     // ---- UI handles (UI Toolkit) ----
     private VisualElement root;
@@ -104,7 +113,8 @@ public class FateEffectController : MonoBehaviour
     {
         if (drainOxygen && !paused)   // oxygen freezes while a menu is open
         {
-            oxygen = Mathf.Max(0f, oxygen - oxygenDrainPerSecond * Time.deltaTime);
+            oxygen = Mathf.Max(0f, oxygen - (oxygenDrainPerSecond + extraDrainPerSecond) * Time.deltaTime);
+            if (oxygen <= autoUseReserveBelow) TryUseOxygenReserve();
             if (ui != null) ui.SetOxygen(oxygen);
         }
 
@@ -114,8 +124,37 @@ public class FateEffectController : MonoBehaviour
             timerLabel.text = $"PUZZLE  {puzzleTimer.TimeRemaining:0}s";
     }
 
+    // ---- resource management ------------------------------------------------
+
+    // Refill oxygen (capped at 100%). Used by canisters and the room-repair bonus.
+    public void AddOxygen(float amount)
+    {
+        oxygen = Mathf.Min(100f, oxygen + amount);
+        if (ui != null) ui.SetOxygen(oxygen);
+        Debug.Log($"[OXYGEN] +{amount:0}% -> {oxygen:0}%");
+    }
+
+    // Extra oxygen drain on top of the normal rate (the alien sets this while close).
+    public void SetExtraOxygenDrain(float perSecond) => extraDrainPerSecond = Mathf.Max(0f, perSecond);
+
+    // Uses a stored canister from the inventory. A locked slot (RESOURCE LOSS) can't be used.
+    private void TryUseOxygenReserve()
+    {
+        if (inventory == null || !inventory.UseItem(oxygenReserveItem)) return;
+        Debug.Log("[OXYGEN] Low oxygen -> stored canister used.");
+        AddOxygen(reserveRefillAmount);
+    }
+
+    // IMMUNITY is used up when it blocks something. Returns true if it was available.
+    public bool ConsumeImmunity()
+    {
+        if (!Immunity) return false;
+        Immunity = false;
+        return true;
+    }
+
     // Called automatically when the player spins the wheel in the UI.
-    private void ApplyOutcome(string outcome)
+    public void ApplyOutcome(string outcome)
     {
         ActiveOutcome = outcome;
         Debug.Log($"<color=cyan>[FATE]</color> Outcome received from UI: {outcome}");
@@ -125,14 +164,14 @@ public class FateEffectController : MonoBehaviour
             // ---- Helpful (buffs) ----
             case "IMMUNITY":
                 Immunity = true;
-                Announce("IMMUNITY active - next wrong input shielded");  // state only (needs puzzle)
+                Announce("IMMUNITY active - the alien can't hurt you once");
                 break;
             case "EXTRA TIME":
                 if (puzzleTimer != null) puzzleTimer.AddTime(extraTimeSeconds);   // real: timer jumps +30
                 break;
             case "HINT":
                 HintActive = true;
-                Announce("HINT unlocked for this puzzle");                // state only (needs puzzle)
+                Announce("HINT unlocked - next objective highlighted");   // read by ObjectiveHint
                 break;
             case "NEW TOOL":
                 if (inventory != null) inventory.AddToolSlot();
@@ -152,6 +191,7 @@ public class FateEffectController : MonoBehaviour
                 break;
             case "HAZARD":
                 if (puzzleTimer != null) puzzleTimer.RemoveTime(hazardSeconds);  // real: timer drops -15
+                HazardActive = true;                                             // alien speeds up this room
                 break;
 
             default:
@@ -278,6 +318,8 @@ public class FateEffectController : MonoBehaviour
     {
         Immunity        = false;
         HintActive      = false;
+        HazardActive    = false;
+        extraDrainPerSecond = 0f;
         EquipmentFailed = false;
         VisibilityMultiplier = 1f;
         ActiveOutcome   = null;
@@ -308,4 +350,7 @@ public class FateEffectController : MonoBehaviour
                          "RESOURCE LOSS", "EQUIPMENT FAILURE", "REDUCED VISION", "HAZARD" };
         ApplyOutcome(all[Random.Range(0, all.Length)]);
     }
+
+    [ContextMenu("Test Low Oxygen (10%)")]
+    private void TestLowOxygen() { oxygen = 10f; if (ui != null) ui.SetOxygen(oxygen); }
 }
