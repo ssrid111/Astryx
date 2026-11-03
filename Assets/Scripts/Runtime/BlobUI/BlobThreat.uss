@@ -1,0 +1,10 @@
+.blob-ui { position: absolute; top: 0; right: 0; bottom: 0; left: 0; align-items: center; }
+.blob-warning { position: absolute; top: 280px; width: 500px; max-width: 85%; min-height: 94px; flex-direction: row; align-items: center; background-color: #FFF5DA; border-color: #24234B; border-width: 4px; border-radius: 24px; padding: 10px 16px; color: #24234B; }
+.blob-portrait { width: 76px; height: 68px; flex-shrink: 0; margin-right: 14px; background-image: url('../../../Sprites/Enemies/BlobAlien/BlobAlien.png'); -unity-background-scale-mode: scale-to-fit; }
+.blob-copy { flex-grow: 1; flex-shrink: 1; }
+.blob-status { font-size: 20px; -unity-font-style: bold; white-space: normal; margin-bottom: 4px; }
+.blob-message { font-size: 18px; white-space: normal; }
+.blob-direction { width: 42px; height: 42px; flex-shrink: 0; margin-left: 10px; font-size: 36px; -unity-font-style: bold; -unity-text-align: middle-center; }
+.blob-warning.following { background-color: #341963; border-color: #C7A6F7; color: #FFF5DA; }
+.blob-warning.danger { background-color: #FFF5DA; border-color: #E15E79; border-width: 5px; color: #70293C; }
+.blob-warning.hidden, .blob-direction.hidden { display: none; }

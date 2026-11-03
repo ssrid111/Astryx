@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+  <Style src="BlobThreat.uss" />
+  <ui:VisualElement name="blob-ui" class="blob-ui" picking-mode="Ignore">
+    <ui:VisualElement name="blob-warning" class="blob-warning hidden" picking-mode="Ignore">
+      <ui:VisualElement class="blob-portrait" picking-mode="Ignore" />
+      <ui:VisualElement class="blob-copy" picking-mode="Ignore">
+        <ui:Label name="blob-status" text="STRANGE PRESENCE" class="blob-status" picking-mode="Ignore" />
+        <ui:Label name="blob-message" text="Something is nearby." class="blob-message" picking-mode="Ignore" />
+      </ui:VisualElement>
+      <ui:Label name="blob-direction" text="↑" class="blob-direction hidden" picking-mode="Ignore" />
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>
