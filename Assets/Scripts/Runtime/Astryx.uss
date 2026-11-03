@@ -114,3 +114,6 @@ Button:disabled { background-color: #85809D; color: #FFFFFF; }
 .backend-connected .prompt { display: none; }
 .live-world .prompt { display: flex; }
 .backend-connected .backend-banner { width: 260px; min-width: 260px; max-width: 260px; bottom: 18px; }
+
+/* Alien warning shares the HUD document and stays beneath modal overlays. */
+.blob-threat-host { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }

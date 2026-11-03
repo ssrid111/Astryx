@@ -14,6 +14,7 @@ public class AstryxDemo : MonoBehaviour
     public event Action ExitRequested;
     public event Action<bool> PauseChanged;
     VisualElement root;
+    public BlobThreatUI BlobWarningUI { get; private set; }
     // Read-only scene bindings: the UI observes existing systems and delegates save/load.
     [Header("Optional backend bindings (auto-detected in the same scene)")]
     [SerializeField] PlayerInventory playerInventory;
@@ -50,6 +51,9 @@ public class AstryxDemo : MonoBehaviour
     void OnEnable()
     {
         root = GetComponent<UIDocument>().rootVisualElement;
+        BlobWarningUI = GetComponent<BlobThreatUI>();
+        if (BlobWarningUI == null) BlobWarningUI = gameObject.AddComponent<BlobThreatUI>();
+        BlobWarningUI.Bind(root);
         Application.logMessageReceived += OnBackendLog;
         Bind("start", () => Show(null));
         Bind("pause-open", () => Show("pause")); Bind("resume", () => Show(null));
@@ -108,6 +112,7 @@ public class AstryxDemo : MonoBehaviour
     void OnDisable()
     {
         Application.logMessageReceived -= OnBackendLog;
+        if (BlobWarningUI != null) BlobWarningUI.SetMenuOpen(true);
         if (timerSubscribed && puzzleTimer != null && puzzleTimer.OnTimeExpired != null)
             puzzleTimer.OnTimeExpired.RemoveListener(OnPuzzleTimeExpired);
         timerSubscribed = false;
@@ -332,12 +337,19 @@ public class AstryxDemo : MonoBehaviour
         screen = name;
         foreach (string id in new[] { "intro", "inventory", "roulette", "puzzle", "pause", "complete", "gameover", "confirm" }) root.Q(id).EnableInClassList("hidden", id != name);
         // Subscribe to this signal to freeze oxygen, player input and hazards. No global timeScale changes.
+        if (BlobWarningUI != null) BlobWarningUI.SetMenuOpen(name != null);
         PauseChanged?.Invoke(name != null);
         UpdateTimerLabel();
         if (name == "pause") UpdateSaveAvailability();
         var panel = name == null ? root : root.Q(name);
         var first = panel.Q<Button>(); if (first != null) first.Focus(); else root.Focus();
     }
+    // Called by the enemy system when its actual state changes; no chase rules are defined here.
+    public void SetAlienThreat(BlobThreatUI.ThreatState state, Vector2 screenDirection = default, bool showDirection = false)
+    {
+        if (BlobWarningUI != null) BlobWarningUI.SetThreat(state, screenDirection, showDirection);
+    }
+
     public void SetOxygen(float percent)
     {
         oxygen = Mathf.Clamp(percent, 0, 100);
