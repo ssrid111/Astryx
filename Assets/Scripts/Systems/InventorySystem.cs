@@ -106,6 +106,15 @@ public class InventorySystem : MonoBehaviour
         Debug.Log($"[INVENTORY] Bonus tool slot added. Total slots: {SlotCount}");
     }
 
+    // Load game -> replace every slot with the saved ones (NEW TOOL slots included).
+    public void RestoreSlots(IList<Slot> saved)
+    {
+        slots.Clear();
+        foreach (var s in saved)
+            slots.Add(new Slot { itemName = s.itemName ?? "", isLocked = s.isLocked });
+        Debug.Log($"[INVENTORY] Restored {SlotCount} slots. Locked: {LockedCount}");
+    }
+
     [ContextMenu("Test Lock Slot")]   private void TestLock() => LockSlot();
     [ContextMenu("Test Add Tool Slot")] private void TestAddSlot() => AddToolSlot();
 }

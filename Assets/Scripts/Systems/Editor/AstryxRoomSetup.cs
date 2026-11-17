@@ -9,7 +9,8 @@ using UnityEngine.UIElements;
 //
 // Tools > Astryx > Add Fate Systems To DemoRoom
 // Adds the HUD, Fate Roulette systems, oxygen canister, blob
-// alien and objective hint to the playable room and wires all references.
+// alien, objective hint and Fate save system to the playable room and wires
+// all references.
 // Safe to run again: if the room is already set up, it only adds what's missing
 // (for example the compact room HUD layout).
 // =============================================================================
@@ -29,12 +30,23 @@ public static class AstryxRoomSetup
         var existing = GameObject.Find("FateSystems");
         if (existing != null)
         {
+            bool changed = false;
             if (existing.GetComponent<RoomHudLayout>() == null)
             {
                 AddRoomHudLayout(existing);
+                Debug.Log("[SETUP] Added the compact room HUD layout to FateSystems.");
+                changed = true;
+            }
+            if (existing.GetComponent<FateSaveSystem>() == null)
+            {
+                AddFateSaveSystem(existing);
+                Debug.Log("[SETUP] Added the Fate save system (F5 save / F9 load) to FateSystems.");
+                changed = true;
+            }
+            if (changed)
+            {
                 EditorSceneManager.MarkSceneDirty(scene);
                 EditorSceneManager.SaveScene(scene);
-                Debug.Log("[SETUP] Added the compact room HUD layout to FateSystems.");
             }
             else Debug.Log("[SETUP] DemoRoom is already up to date. Nothing to do.");
             return;
@@ -95,6 +107,7 @@ public static class AstryxRoomSetup
         Set(canister, "icon", AssetDatabase.LoadAssetAtPath<Texture2D>(OxygenIcon));
         Set(alien, "player", player); Set(alien, "fate", fate); Set(alien, "ui", ui); Set(alien, "cam", cam);
         Set(alien, "roomMax", new Vector2(5.5f, 2.5f));
+        AddFateSaveSystem(systems);
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
@@ -105,6 +118,23 @@ public static class AstryxRoomSetup
     {
         var layout = systems.AddComponent<RoomHudLayout>();
         Set(layout, "roomStyle", AssetDatabase.LoadAssetAtPath<StyleSheet>(RoomHudStyle));
+    }
+
+    static void AddFateSaveSystem(GameObject systems)
+    {
+        var save = systems.AddComponent<FateSaveSystem>();
+        Set(save, "fate", systems.GetComponent<FateEffectController>());
+        Set(save, "puzzleTimer", systems.GetComponent<PuzzleTimer>());
+        Set(save, "inventory", systems.GetComponent<InventorySystem>());
+        Set(save, "room", systems.GetComponent<RoomProgressController>());
+
+        var canisters = Object.FindObjectsByType<OxygenCanister>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID);
+        var so = new SerializedObject(save);
+        var list = so.FindProperty("canisters");
+        list.arraySize = canisters.Length;
+        for (int i = 0; i < canisters.Length; i++)
+            list.GetArrayElementAtIndex(i).objectReferenceValue = canisters[i];
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void Set(Object target, string field, object value)

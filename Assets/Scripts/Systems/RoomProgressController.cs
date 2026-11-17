@@ -42,6 +42,13 @@ public class RoomProgressController : MonoBehaviour
         if (!roomComplete && repairPanel.IsRepaired) CompleteRoom();
     }
 
+    // Load game -> set the room state directly, without giving the oxygen bonus again.
+    public void RestoreState(bool complete)
+    {
+        roomComplete = complete;
+        if (complete && alien != null) alien.Retreat();
+    }
+
     private void CompleteRoom()
     {
         roomComplete = true;

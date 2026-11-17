@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 428123872}
   - component: {fileID: 428123871}
   - component: {fileID: 428123875}
+  - component: {fileID: 428123876}
   m_Layer: 0
   m_Name: FateSystems
   m_TagString: Untagged
@@ -545,6 +546,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomHudLayout
   roomStyle: {fileID: 7433441132597879392, guid: a37150296d50a4c29bdee3dea8fcd6b0, type: 3}
+--- !u!114 &428123876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428123866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e008f403170b42cbb4d309a561843c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FateSaveSystem
+  fate: {fileID: 428123868}
+  puzzleTimer: {fileID: 428123870}
+  inventory: {fileID: 428123869}
+  room: {fileID: 428123872}
+  canisters:
+  - {fileID: 229982121}
 --- !u!114 &569832677 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5294191645668620443, guid: 71da6177ff8900848b3f1273644be391, type: 3}

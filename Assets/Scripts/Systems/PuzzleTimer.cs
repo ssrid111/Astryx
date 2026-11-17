@@ -18,6 +18,7 @@ public class PuzzleTimer : MonoBehaviour
 
     public float TimeRemaining => timeRemaining;
     public bool  IsRunning     => isRunning;
+    public bool  IsStopped     => stopped;
     public UnityEvent OnTimeExpired;   // hook puzzle-failure here later
 
     public void StartTimer(float duration = -1f)
@@ -62,5 +63,14 @@ public class PuzzleTimer : MonoBehaviour
     {
         timeRemaining = Mathf.Max(0f, timeRemaining - seconds);
         Debug.Log($"[TIMER] -{seconds:0}s -> {timeRemaining:0}s");
+    }
+
+    // Load game -> put the countdown back where it was saved.
+    public void RestoreState(float seconds, bool wasStopped, bool startPaused)
+    {
+        timeRemaining = Mathf.Max(0f, seconds);
+        stopped = wasStopped;
+        isRunning = !stopped && !startPaused && timeRemaining > 0f;
+        Debug.Log($"[TIMER] Restored -> {timeRemaining:0}s{(stopped ? " (stopped)" : "")}");
     }
 }

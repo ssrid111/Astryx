@@ -58,6 +58,7 @@ public class FateEffectController : MonoBehaviour
     public float  Oxygen               => oxygen;
     public bool   IsPaused             => paused;
     public bool   HazardActive         { get; private set; }   // HAZARD this room -> alien moves faster
+    public bool   SpinUsed             { get; private set; }   // one free spin per mission (kept after room clears)
 
     // ---- UI handles (UI Toolkit) ----
     private VisualElement root;
@@ -157,6 +158,7 @@ public class FateEffectController : MonoBehaviour
     public void ApplyOutcome(string outcome)
     {
         ActiveOutcome = outcome;
+        SpinUsed = true;
         Debug.Log($"<color=cyan>[FATE]</color> Outcome received from UI: {outcome}");
 
         switch (outcome)
@@ -340,6 +342,32 @@ public class FateEffectController : MonoBehaviour
         UIDimScreen(false);
 
         Debug.Log("[FATE] Modifiers cleared for the next room.");
+    }
+
+    // ---- Load game (FateSaveSystem) -------------------------------------------
+    // Puts back oxygen and the lasting modifiers. The 5s debuffs (REDUCED VISION,
+    // EQUIPMENT FAILURE) are not saved, so they just end on load. Loading never
+    // gives the free spin back, so a player can't reload to re-roll their fate.
+    public void RestoreState(float savedOxygen, string outcome, bool spinUsed,
+                             bool immunity, bool hint, bool hazard)
+    {
+        StopAllCoroutines();
+        ClearEffects();
+
+        oxygen        = Mathf.Clamp(savedOxygen, 0f, 100f);
+        ActiveOutcome = string.IsNullOrEmpty(outcome) ? null : outcome;
+        SpinUsed      = SpinUsed || spinUsed;
+        Immunity      = immunity;
+        HintActive    = hint;
+        HazardActive  = hazard;
+
+        if (ui != null) ui.SetOxygen(oxygen);
+        if (SpinUsed && Root != null)
+        {
+            var spin = Root.Q<Button>("spin");
+            if (spin != null) spin.SetEnabled(false);
+        }
+        Debug.Log($"[FATE] Restored -> oxygen {oxygen:0}%, last fate: {ActiveOutcome ?? "none"}, spin used: {SpinUsed}");
     }
 
     // Quick Inspector test (Play mode): right-click -> "Test Apply Random Outcome"
